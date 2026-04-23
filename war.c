@@ -15,12 +15,23 @@
 // ============================================================================
 
 // Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
-
+#include <stdio.h> 
+#include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+#include <string.h>
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
-
+#define TAM_STRING 50
+#define TOTAL_TERRITORIOS 5
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
+typedef struct
+{
+    char nome[TAM_STRING];
+    char cor[TAM_STRING];
+    int tropas;
+} territorios;
 
 // --- Protótipos das Funções ---
 // Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
@@ -32,6 +43,48 @@
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 int main() {
+
+    territorios t[TOTAL_TERRITORIOS];
+
+    printf("### BEM VINDO AO WAR ### \n\n## Iniciando o cadastro dos territórios... ##\n\n");
+
+// Loop para cadastro dos territórios.
+    for (int i = 0; i < TOTAL_TERRITORIOS; i++)
+    {
+        printf("# Território N°%d #\n\n", i + 1);
+
+        printf("Insira o nome do %d° território: \n", i + 1);
+        setbuf(stdin, NULL); //Limpa o buffer do teclado
+        fgets(t[i].nome, 50, stdin);
+        t[i].nome[strcspn(t[i].nome, "\n")] = 0; // Remove o '\n' que o fgets pega
+
+        printf("Insira a cor do %d° território: \n", i + 1);
+        fgets(t[i].cor, 50, stdin);
+        t[i].cor[strcspn(t[i].cor, "\n")] = 0;
+
+        printf("Insira a quantidade de tropas do %d° território: \n", i + 1);
+        scanf("%d", &t[i].tropas);
+        printf("\n");
+        
+
+    }
+
+    printf("\n### MAPA MUNDO ###\n\n");
+
+    for(int id = 0; id < TOTAL_TERRITORIOS; id++)
+    {
+        printf("## %d° Território ##\n\n", id + 1);
+
+        printf("Nome: %s \n", t[id].nome);
+
+        printf("Cor: %s \n", t[id].cor);
+
+        printf("Quantidade de tropas: %d \n\n", t[id].tropas);
+
+    }
+    
+    
+
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
